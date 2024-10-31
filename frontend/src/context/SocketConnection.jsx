@@ -14,11 +14,14 @@ export const SocketContextProvider = ({ children }) => {
 
   useEffect(() => {
     if (authUser) {
-      const socketInstance = io("http://localhost:9001", {
-        query: {
-          userId: authUser._id,
-        },
-      });
+      const socketInstance = io(
+        "https://mern-stack-chat-application-39kx.onrender.com",
+        {
+          query: {
+            userId: authUser._id,
+          },
+        }
+      );
       setSocket(socketInstance);
 
       socketInstance.on("getOnlineUsers", (users) => {

@@ -30,7 +30,7 @@ const useSignup = () => {
         confirmPassword,
         gender,
       };
-      const data = await axios.post("/api/auth/signup", payload);
+      const { data } = await axios.post("/api/auth/signup", payload);
       if (data.error) {
         throw new Error(data.error);
       }
@@ -68,6 +68,7 @@ function handleInputErrors({
   }
   if (password.length < 6) {
     toast.error("Password should be at least 6 characters");
+    return false;
   }
   return true;
 }
