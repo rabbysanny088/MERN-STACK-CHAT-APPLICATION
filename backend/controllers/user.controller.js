@@ -13,4 +13,26 @@ const getUsersForSidebar = async (req, res) => {
   }
 };
 
-module.exports = { getUsersForSidebar };
+const Profile = async (req, res) => {
+  const { id: profileId } = req.params;
+  try {
+    const user = await User.findOne({ _id: profileId });
+
+    if (!user) {
+      res.status(400).json({ message: "User not found" });
+    }
+
+    return res.status(200).json({
+      _id: user._id,
+      fullName: user.fullName,
+      username: user.username,
+      profilePic: user.profilePic,
+      createdAt: user.createdAt,
+    });
+  } catch (error) {
+    console.log("Error in login controller", error.message);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+module.exports = { getUsersForSidebar, Profile };

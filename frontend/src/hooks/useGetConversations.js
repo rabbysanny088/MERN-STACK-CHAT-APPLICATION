@@ -8,7 +8,7 @@ const useGetConversations = () => {
 
   useEffect(() => {
     const getConversations = async () => {
-      setLoading(false);
+      setLoading(true);
       try {
         const { data } = await axios.get("/api/users");
         if (data.error) {

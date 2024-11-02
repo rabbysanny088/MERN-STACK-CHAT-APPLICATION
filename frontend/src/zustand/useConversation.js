@@ -5,8 +5,6 @@ const useConversation = create((set) => ({
     set({ selectedConversation }),
   messages: [],
   setMessages: (messages) => set({ messages }),
-  isSidebarVisible: true,
-  setIsSidebarVisible: (isVisible) => set({ isSidebarVisible: isVisible }),
 }));
 
 export default useConversation;

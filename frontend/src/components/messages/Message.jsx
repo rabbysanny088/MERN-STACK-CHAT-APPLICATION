@@ -1,7 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../context/AuthContext";
 import { extractTime } from "../../utils/extractTime";
 import useConversation from "../../zustand/useConversation";
 const Message = ({ message }) => {
+  const navigate = useNavigate();
+
   const { authUser } = useAuthContext();
   const { selectedConversation } = useConversation();
   const fromMe = message.senderId === authUser._id;
@@ -15,8 +18,15 @@ const Message = ({ message }) => {
   return (
     <div className={`chat ${chatClassName}`}>
       <div className="chat-image avatar">
-        <div className="w-10 rounded-full">
-          <img src={profilePic} alt="Tailwind Css Chat bubble component" />
+        <div className="w-10 rounded-full cursor-pointer">
+          <img
+            src={profilePic}
+            alt="No image"
+            onClick={(e) => {
+              e.stopPropagation();
+              navigate(`/profile/${selectedConversation._id}`);
+            }}
+          />
         </div>
       </div>
       <div

@@ -1,11 +1,14 @@
+import { useNavigate } from "react-router-dom";
 import { useSocketContext } from "../../context/SocketConnection";
 import useConversation from "../../zustand/useConversation";
 
 const Conversation = ({ conversation, lastIdx, emoji }) => {
   const { selectedConversation, setSelectedConversation } = useConversation();
+  // const { getProfile } = useProfile();
   const { onlineUsers } = useSocketContext();
   const isSelected = selectedConversation?._id === conversation._id;
   const isOnline = onlineUsers.includes(conversation._id);
+  const navigate = useNavigate();
   return (
     <>
       <div
@@ -16,7 +19,14 @@ const Conversation = ({ conversation, lastIdx, emoji }) => {
       >
         <div className={`avatar ${isOnline ? "online" : "offline"} `}>
           <div className="w-12 rounded-full">
-            <img src={conversation.profilePic} alt="user avatar" />
+            <img
+              onClick={(e) => {
+                e.stopPropagation(); // Prevents triggering `setSelectedConversation`
+                navigate(`/profile/${conversation._id}`);
+              }}
+              src={conversation.profilePic}
+              alt="user avatar"
+            />
           </div>
         </div>
         <div className="flex flex-col flex-1">
